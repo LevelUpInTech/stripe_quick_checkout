@@ -50,9 +50,8 @@ npm install
 3. Set Up Environment Variables
 ```Create a .env file in the /server directory:
 
-env
-Copy
-Edit
+.env
+
 STRIPE_SECRET_KEY=sk_test_...
 STRIPE_WEBHOOK_SECRET=whsec_...
 AIRTABLE_API_KEY=your_airtable_api_key
@@ -86,11 +85,14 @@ Complete the Stripe test checkout
 Confirm a new entry appears in Airtable
 
 🧰 Troubleshooting
-Webhook not firing? Make sure your Render or local server is reachable and webhook secret is correct.
+Webhook not firing? 
+👉🏾 Make sure your Render or local server is reachable and webhook secret is correct.
 
-Airtable error? Check if the "Purchases" table and select fields match your script.
+Airtable error? 
+👉🏾 Check if the "Purchases" table and select fields match your script.
 
-Push blocked by GitHub? Rotate your keys and clean secrets from history.
+Push blocked by GitHub? 
+👉🏾 Rotate your keys and clean secrets from history.
 
 📄 License
 MIT... do what you want, just don’t commit secrets 🙃
