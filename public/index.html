@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Broadus's Stripe Smart Checkout</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      text-align: center;
+      padding-top: 100px;
+    }
+    h1 {
+      color: #333;
+    }
+    button {
+      background-color: #635bff;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #5548e1;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Stripe Smart Checkout</h1>
+  <button id="buyButton">Buy Now</button>
+
+  <!-- Include Stripe.js -->
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    async function initStripeCheckout() {
+      try {
+        // Fetch the publishable key from server
+        const configRes = await fetch('/config');
+        const { publishableKey } = await configRes.json();
+
+        const stripe = Stripe(publishableKey);
+
+        document.getElementById("buyButton").addEventListener("click", async () => {
+          const response = await fetch("/create-checkout-session", {
+            method: "POST",
+          });
+
+          const data = await response.json();
+
+          if (data.id) {
+            const result = await stripe.redirectToCheckout({ sessionId: data.id });
+            if (result.error) {
+              alert(result.error.message);
+            }
+          } else {
+            alert("Something went wrong. Please try again.");
+          }
+        });
+      } catch (error) {
+        console.error("Error initializing Stripe:", error);
+        alert("Unable to initialize checkout.");
+      }
+    }
+
+    initStripeCheckout();
+  </script>
+</body>
+</html>
