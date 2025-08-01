@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stripe-checkout
+  labels:
+    app: stripe-checkout
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: stripe-checkout
+  template:
+    metadata:
+      labels:
+        app: stripe-checkout
+    spec:
+      containers:
+      - name: stripe-checkout
+        image: stripe-checkout-app:latest
+        imagePullPolicy: Never  # Use local image
+        ports:
+        - containerPort: 3000
+          name: http
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "3000"
+        - name: STRIPE_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: stripe-secrets
+              key: stripe-secret-key
+        - name: STRIPE_WEBHOOK_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: stripe-secrets
+              key: stripe-webhook-secret
+        - name: AIRTABLE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: airtable-secrets
+              key: airtable-api-key
+        - name: AIRTABLE_BASE_ID
+          valueFrom:
+            secretKeyRef:
+              name: airtable-secrets
+              key: airtable-base-id
+        - name: AIRTABLE_TABLE_ID
+          valueFrom:
+            secretKeyRef:
+              name: airtable-secrets
+              key: airtable-table-id
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"

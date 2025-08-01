@@ -1,0 +1,18 @@
+#! stripe-checkout-expose.yaml
+# Generated code, do not edit
+apiVersion: v1
+kind: Service
+metadata:
+    name: stripe-checkout
+    namespace: stripe-smart-checkout
+    labels:
+        com.docker.compose.project: stripe-smart-checkout
+        com.docker.compose.service: stripe-checkout
+spec:
+    selector:
+        com.docker.compose.project: stripe-smart-checkout
+        com.docker.compose.service: stripe-checkout
+    ports:
+        - name: stripe-che-3000
+          port: 3000
+          targetPort: stripe-che-3000

@@ -1,0 +1,10 @@
+#! kustomization.yaml
+# Generated code, do not edit
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+    - 0-stripe-smart-checkout-namespace.yaml
+    - default-network-policy.yaml
+    - stripe-checkout-deployment.yaml
+    - stripe-checkout-expose.yaml
+    - stripe-checkout-service.yaml

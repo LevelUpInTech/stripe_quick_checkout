@@ -1,0 +1,8 @@
+#! 0-stripe-smart-checkout-namespace.yaml
+# Generated code, do not edit
+apiVersion: v1
+kind: Namespace
+metadata:
+    name: stripe-smart-checkout
+    labels:
+        com.docker.compose.project: stripe-smart-checkout
